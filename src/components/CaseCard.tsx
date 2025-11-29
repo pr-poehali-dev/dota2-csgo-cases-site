@@ -3,6 +3,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
+import CaseOpenDialog from './CaseOpenDialog';
 
 interface CaseCardProps {
   id: string;
@@ -17,6 +18,20 @@ interface CaseCardProps {
 
 const CaseCard = ({ name, game, rarity, price, image, popular, isNew }: CaseCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const mockItems = [
+    { id: '1', name: 'AWP | Dragon Lore', image: '/placeholder.svg', rarity: 'legendary' as const, price: 15000 },
+    { id: '2', name: 'AK-47 | Fire Serpent', image: '/placeholder.svg', rarity: 'epic' as const, price: 8000 },
+    { id: '3', name: 'M4A4 | Howl', image: '/placeholder.svg', rarity: 'legendary' as const, price: 12000 },
+    { id: '4', name: 'Karambit | Fade', image: '/placeholder.svg', rarity: 'legendary' as const, price: 18000 },
+    { id: '5', name: 'Glock-18 | Fade', image: '/placeholder.svg', rarity: 'epic' as const, price: 5000 },
+    { id: '6', name: 'USP-S | Kill Confirmed', image: '/placeholder.svg', rarity: 'rare' as const, price: 3000 },
+    { id: '7', name: 'Desert Eagle | Blaze', image: '/placeholder.svg', rarity: 'rare' as const, price: 2500 },
+    { id: '8', name: 'P250 | Asiimov', image: '/placeholder.svg', rarity: 'common' as const, price: 500 },
+    { id: '9', name: 'AWP | Asiimov', image: '/placeholder.svg', rarity: 'epic' as const, price: 6000 },
+    { id: '10', name: 'M4A1-S | Hyper Beast', image: '/placeholder.svg', rarity: 'rare' as const, price: 3500 },
+  ];
 
   const rarityColors = {
     common: 'bg-muted text-muted-foreground',
@@ -97,11 +112,20 @@ const CaseCard = ({ name, game, rarity, price, image, popular, isNew }: CaseCard
           <Icon name="GitCompare" className="h-4 w-4" />
           Сравнить
         </Button>
-        <Button size="sm" className="gap-2">
-          <Icon name="Eye" className="h-4 w-4" />
+        <Button size="sm" className="gap-2" onClick={() => setOpenDialog(true)}>
+          <Icon name="Zap" className="h-4 w-4" />
           Открыть
         </Button>
       </CardFooter>
+
+      <CaseOpenDialog
+        open={openDialog}
+        onOpenChange={setOpenDialog}
+        caseName={name}
+        casePrice={price}
+        caseImage={image}
+        items={mockItems}
+      />
     </Card>
   );
 };
